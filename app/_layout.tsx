@@ -3,22 +3,24 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { CartProvider } from '@/context/CartContext';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
+      <CartProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ title: 'Pocket Bazaar' }} />
+          <Stack.Screen name="product/[id]" options={{ title: 'Product Details' }} />
+          <Stack.Screen name="cart" options={{ title: 'Cart' }} />
+          <Stack.Screen name="checkout" options={{ title: 'Checkout' }} />
+          <Stack.Screen name="orders" options={{ title: 'Order History' }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </CartProvider>
     </ThemeProvider>
   );
 }
